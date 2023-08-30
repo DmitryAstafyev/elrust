@@ -1,0 +1,28 @@
+@import '../../styles/variables.less';
+
+:host {
+    position: relative;
+    display: block;
+    height: 20px;
+    & span {
+        flex: auto;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-left: 6px;
+        color: @scheme-color-0;
+        cursor: default;
+    }
+    & input {
+        width: ~"calc(100% - 16px)";
+        margin: 0 8px;
+        padding: 0;
+        border: none;
+        border-bottom: dashed 1px @scheme-color-1;
+        flex: auto;
+        white-space: nowrap;
+        color: @scheme-color-0;
+        background: none;
+        outline: none;
+    }
+}
