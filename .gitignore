@@ -56,7 +56,6 @@ Thumbs.db
 **/build
 **/.angular
 application/apps/**/target/*
-application/apps/rustcore/ts-cli
 .vscode
 !webpack.config.js
 .idea

@@ -13,13 +13,13 @@ namespace :install do
     Holder.new(HolderSettings.new).install
   end
 
-  desc 'Install rustcore'
-  task :rustcore do
+  desc 'Install bindings'
+  task :bindings do
     Bindings.new(false).install
   end
 
   desc 'install all'
-  task all: ['install:rustcore', 'install:client', 'install:holder'] do
+  task all: ['install:bindings', 'install:client', 'install:holder'] do
     Reporter.print
   end
 end

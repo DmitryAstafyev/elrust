@@ -2720,7 +2720,7 @@ picomatch@^2.3.1:
   integrity sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==
 
 "platform@file:../platform":
-  version "0.1.0"
+  version "3.9.0"
 
 plist@^3.0.4, plist@^3.0.5:
   version "3.1.0"
@@ -2889,8 +2889,8 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-"rustcore@file:../apps/rustcore/ts-bindings":
-  version "0.0.1"
+"rustcore@file:../apps/bindings/ts-bindings":
+  version "3.9.0"
   dependencies:
     platform "file:../../../../../../home/dmitry/.cache/yarn/v6/platform"
     tslib "^2.6.0"
