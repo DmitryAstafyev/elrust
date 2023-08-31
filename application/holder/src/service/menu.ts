@@ -9,7 +9,6 @@ import { services } from '@register/services';
 import { cli } from '@service/cli';
 import { Menu, MenuItem } from 'electron';
 import { notifications } from '@service/notifications';
-import { unique } from 'platform/env/sequence';
 import { ElrustGlobal } from '@register/global';
 
 import * as Actions from './actions';

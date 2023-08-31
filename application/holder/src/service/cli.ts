@@ -8,17 +8,11 @@ import {
 import { services } from '@register/services';
 import { electron } from '@service/electron';
 import { paths } from '@service/paths';
-import { envvars } from '@loader/envvars';
 import { isDevelopingExecuting } from '@loader/cli';
-import { exec } from 'sudo-prompt';
 import { getActions } from '@loader/cli';
 
 import * as Actions from './cli/index';
 import * as Events from 'platform/ipc/event';
-import * as fs from 'fs';
-
-const UNIX_LOCAL_BIN = '/usr/local/bin';
-const UNIX_SYMLINK_PATH = `${UNIX_LOCAL_BIN}/cm`;
 
 @DependOn(paths)
 @DependOn(electron)

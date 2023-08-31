@@ -41,14 +41,6 @@ fn id_from_i64(id: i64) -> Result<u64, ComputationErrorWrapper> {
     })
 }
 
-fn usize_from_i64(id: i64) -> Result<usize, ComputationErrorWrapper> {
-    usize::try_from(id).map_err(|_| {
-        ComputationErrorWrapper(ComputationError::InvalidArgs(String::from(
-            "Fail to conver i64 to usize",
-        )))
-    })
-}
-
 #[node_bindgen]
 impl UnboundJobs {
     // Self methods

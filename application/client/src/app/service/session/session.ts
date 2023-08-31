@@ -24,12 +24,12 @@ export class Session extends Base {
         super();
         this._toolbar.add({
             uuid: ids.TOOLBAR_TAB_SEARCH,
-            name: 'Search',
+            name: 'Sidebar App',
             active: true,
             closable: false,
             uppercaseTitle: true,
             content: {
-                factory: components.get('app-views-search'),
+                factory: components.get('app-views-sidebar-app'),
                 inputs: {
                     session: this,
                 },
@@ -37,12 +37,12 @@ export class Session extends Base {
         });
         this._sidebar.add({
             uuid: ids.SIDEBAR_TAB_FILTERS,
-            name: 'Filters',
+            name: 'Toolbar App',
             active: true,
             closable: false,
             uppercaseTitle: true,
             content: {
-                factory: components.get('app-views-filters'),
+                factory: components.get('app-views-toolbar-app'),
                 inputs: {
                     session: this,
                 },

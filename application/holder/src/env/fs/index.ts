@@ -1,6 +1,3 @@
-import { error } from 'platform/log/utils';
-
-import * as obj from 'platform/env/obj';
 import * as fs from 'fs';
 import * as path from 'path';
 

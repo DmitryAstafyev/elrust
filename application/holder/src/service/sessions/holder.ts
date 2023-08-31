@@ -3,10 +3,6 @@ import { Session } from 'rustcore';
 import { JobsTracker } from 'platform/env/promise';
 import { scope } from 'platform/env/scope';
 import { Logger } from 'platform/log';
-import { jobs } from '@service/jobs';
-import { ICancelablePromise } from 'platform/env/promise';
-
-import * as Events from 'platform/ipc/event';
 
 export enum Jobs {
     search = 'search',

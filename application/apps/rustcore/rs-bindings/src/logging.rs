@@ -12,10 +12,6 @@ use std::{
     time::SystemTime,
 };
 
-pub mod targets {
-    pub const SESSION: &str = "session";
-}
-
 pub struct SimpleLogger;
 
 impl log::Log for SimpleLogger {

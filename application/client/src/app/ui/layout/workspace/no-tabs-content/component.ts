@@ -13,5 +13,17 @@ export class LayoutHome extends ChangesDetector {
     constructor(cdRef: ChangeDetectorRef) {
         super(cdRef);
     }
+
+    public create(): void {
+        this.ilc()
+            .services.system.session.add(true)
+            .empty()
+            .then((session) => {
+                this.log().debug(`Session ${session.uuid()} has been created`);
+            })
+            .catch((err: Error) => {
+                this.log().error(`Fail to create a session due: ${err.message}`);
+            });
+    }
 }
 export interface LayoutHome extends IlcInterface {}

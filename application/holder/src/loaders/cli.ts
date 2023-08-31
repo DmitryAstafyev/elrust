@@ -1,11 +1,9 @@
-import { program as cli, Option } from 'commander';
+import { program as cli } from 'commander';
 import { CLIAction } from '@service/cli/action';
 import { spawn } from 'child_process';
 import { Socket } from 'net';
 import { WriteStream } from 'fs';
 import { logger } from './logger';
-
-import * as handlers from '@service/cli/index';
 
 const DEV_EXECUTOR_PATH = 'node_modules/electron/dist/electron';
 const DEV_EXECUTOR_PATH_DARVIN = 'node_modules/electron/dist/Electron.app/Contents/MacOS/Electron';
@@ -38,7 +36,7 @@ function collectErrors(): Error[] {
     return errors;
 }
 
-function parser(handler: CLIAction): (value: string, prev: string) => string {
+function _parser(handler: CLIAction): (value: string, prev: string) => string {
     return handler.argument.bind(handler, process.cwd()) as unknown as (
         value: string,
         prev: string,
