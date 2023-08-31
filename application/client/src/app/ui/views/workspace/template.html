@@ -1,4 +1,10 @@
 <app-views-workspace-title [session]="session"></app-views-workspace-title>
 <div class="content">
-    <p class="t-normal">This is session's working space</p>
+    <p class="t-normal color-scheme-1">This is session's working space</p>
+    <p class="t-normal color-scheme-1">Try to make a call to external lib for:</p>
+    <p class="t-normal color-scheme-1">- sum 2 and 6 </p>
+    <p class="t-normal color-scheme-1">- find "tw" in ["one", "two", "three"]</p>    
+    <button mat-stroked-button (click)="externalCallLib()">Make Call To External Lib</button>
+    <p class="t-normal color-scheme-accent" *ngIf="sum !== undefined">SUM: {{sum}}</p>
+    <p class="t-normal color-scheme-accent" *ngIf="found !== undefined">FOUND: {{found}}</p>
 </div>

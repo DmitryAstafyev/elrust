@@ -44,6 +44,15 @@ export class Service extends Implementation {
                     RequestHandlers.Session.Destroy.handler,
                 ),
         );
+        this.register(
+            electron
+                .ipc()
+                .respondent(
+                    this.getName(),
+                    Requests.Session.ExternalCallLib.Request,
+                    RequestHandlers.Session.ExternalCallLib.handler,
+                ),
+        );
         return Promise.resolve();
     }
 

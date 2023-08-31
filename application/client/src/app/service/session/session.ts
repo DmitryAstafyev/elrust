@@ -145,5 +145,18 @@ export class Session extends Base {
             },
         };
     }
+
+    public externalCallLib(
+        a: number,
+        b: number,
+        lines: string[],
+    ): Promise<{ sum: number; found: string | undefined }> {
+        return Requests.IpcRequest.send<Requests.Session.ExternalCallLib.Response>(
+            Requests.Session.ExternalCallLib.Response,
+            new Requests.Session.ExternalCallLib.Request({ uuid: this.uuid(), a, b, lines }),
+        ).then((response) => {
+            return { sum: response.sum, found: response.found };
+        });
+    }
 }
 export interface Session extends LoggerInterface {}
