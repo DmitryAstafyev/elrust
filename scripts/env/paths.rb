@@ -37,7 +37,7 @@ module Paths
   ELECTRON_CLIENT_DEST = 'application/holder/dist/client'
   TSBINDINGS = 'application/apps/rustcore/ts-bindings'
   RUSTCORE = 'application/apps/rustcore'
-  INDEXER = 'application/apps/indexer'
+  CORE = 'application/apps/core'
   PLATFORM = 'application/platform'
   PLATFORM_DIST = 'application/platform/dist'
   CLIPPY_NIGHTLY = 'cargo +nightly clippy --all --all-features -- -D warnings -A clippy::uninlined_format_args'

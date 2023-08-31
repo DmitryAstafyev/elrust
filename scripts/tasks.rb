@@ -316,10 +316,10 @@ namespace :clippy do
     sh 'rustup component add --toolchain=nightly clippy-preview'
   end
 
-  desc 'Clippy indexer'
-  task :indexer do
-    Reporter.add(Jobs::Clippy, Owner::Indexer, "checked: #{Paths::INDEXER}", '')
-    Shell.chdir(Paths::INDEXER) do
+  desc 'Clippy core'
+  task :core do
+    Reporter.add(Jobs::Clippy, Owner::Core, "checked: #{Paths::CORE}", '')
+    Shell.chdir(Paths::CORE) do
       sh Paths::CLIPPY_NIGHTLY
     end
   end
@@ -357,7 +357,7 @@ namespace :clippy do
   end
 
   desc 'Clippy all'
-  task all: ['clippy:nightly', 'clippy:indexer', 'clippy:rs_bindings', 'clippy:matcher',
+  task all: ['clippy:nightly', 'clippy:core', 'clippy:rs_bindings', 'clippy:matcher',
              'clippy:utils', 'clippy:updater'] do
     Reporter.print
   end

@@ -83,8 +83,8 @@ jobs:
               with:
                   toolchain: stable
                   override: true
-            - name: Run unit tests on indexer
+            - name: Run unit tests on core
               uses: actions-rs/cargo@v1
               with:
                   command: test
-                  args: --manifest-path ./application/apps/indexer/Cargo.toml
+                  args: --manifest-path ./application/apps/core/Cargo.toml

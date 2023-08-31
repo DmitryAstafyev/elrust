@@ -13,7 +13,7 @@ module Owner
   Client = 'Client'
   Platform = 'Platform'
   Holder = 'Holder'
-  Indexer = 'Indexer'
+  Core = 'Core'
   Rustcore = 'Rustcore'
   Bindings = 'Bindings'
   Matcher = 'Matcher'

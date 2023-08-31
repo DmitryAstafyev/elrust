@@ -166,7 +166,7 @@ pub fn setup_fallback_logging() -> Result<()> {
 //         Err(e) => {
 //             eprintln!("could not initialize logging with init_file: {}", e);
 //             let log_path = home_dir.join(".elrust").join("elrust.rustcore.log");
-//             let appender_name = "indexer-root";
+//             let appender_name = "core-root";
 //             let logfile = FileAppender::builder()
 //                 .encoder(Box::new(PatternEncoder::new("{d} - {l}:: {m}\n")))
 //                 .build(log_path)?;

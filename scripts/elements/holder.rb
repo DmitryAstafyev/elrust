@@ -55,13 +55,13 @@ class Holder
     @node_modules = "#{Paths::ELECTRON}/node_modules"
     @settings = settings
     @installed = File.exist?(@node_modules)
-    @target_indexer_base = "#{Paths::INDEXER}/indexer_base/target"
-    @target_indexer_cli = "#{Paths::INDEXER}/indexer_cli/target"
-    @target_merging = "#{Paths::INDEXER}/merging/target"
-    @target_parsers = "#{Paths::INDEXER}/parsers/target"
-    @target_processor = "#{Paths::INDEXER}/processor/target"
-    @target_session = "#{Paths::INDEXER}/session/target"
-    @target_sources = "#{Paths::INDEXER}/sources/target"
+    @target_indexer_base = "#{Paths::CORE}/indexer_base/target"
+    @target_indexer_cli = "#{Paths::CORE}/indexer_cli/target"
+    @target_merging = "#{Paths::CORE}/merging/target"
+    @target_parsers = "#{Paths::CORE}/parsers/target"
+    @target_processor = "#{Paths::CORE}/processor/target"
+    @target_session = "#{Paths::CORE}/session/target"
+    @target_sources = "#{Paths::CORE}/sources/target"
     @targets = [@dist, @release, @node_modules, @target_indexer_base, @target_indexer_cli, @target_merging, @target_parsers,
                 @target_processor, @target_session, @target_sources]
   end
