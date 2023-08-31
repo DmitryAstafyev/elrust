@@ -44,7 +44,6 @@ module Paths
   TSC = "#{ELECTRON}/node_modules/.bin/tsc"
   CONFIG = 'scripts/config.json'
   MATCHER = 'application/apps/webassembly/matcher'
-  ANSI = 'application/apps/webassembly/ansi'
   UTILS = 'application/apps/webassembly/utils'
   UPDATER = 'application/apps/precompiled/updater'
   RELEASE = 'application/holder/release'

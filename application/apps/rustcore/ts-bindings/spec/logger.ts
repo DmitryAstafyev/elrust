@@ -5,7 +5,7 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 
-const LOG_FILE = 'elrust.indexer.log';
+const LOG_FILE = 'elrust.rustcore.log';
 const HOME = '.elrust';
 const FORCED_REPORT_TIMEOUT = 2 * 60 * 1000;
 

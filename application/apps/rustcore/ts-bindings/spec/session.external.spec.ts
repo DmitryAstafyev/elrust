@@ -20,7 +20,8 @@ describe('External', function () {
                     session
                         .externalCallLib(config.regular.files['lib'], 2, 6, ['one', 'two', 'three'])
                         .then((result) => {
-                            console.log(result);
+                            expect(result.sum).toEqual(8);
+                            expect(result.found).toEqual('two');
                             finish(session, done, undefined);
                         })
                         .catch((err: Error) => {

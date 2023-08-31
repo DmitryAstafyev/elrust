@@ -57,6 +57,7 @@ class Bindings
 
   def build_spec
     Shell.chdir("#{Paths::TS_BINDINGS}/spec") do
+      Shell.rm_rf("build") unless !File.exist?('./build')
       Shell.sh '../node_modules/.bin/tsc -p tsconfig.json' unless File.exist?('./build')
     end
   end

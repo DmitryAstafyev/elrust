@@ -67,12 +67,6 @@ namespace :build do
     Reporter.print
   end
 
-  desc 'Build ansi'
-  task :ansi do
-    Ansi.new(false, false).build
-    Reporter.print
-  end
-
   desc 'Build utils'
   task :utils do
     Utils.new(false, false).build
@@ -157,7 +151,6 @@ namespace :developing do
   task :clean_all do
     Updater.new.clean
     Matcher.new(true, true).clean
-    Ansi.new(true, true).clean
     Utils.new(true, true).clean
     Client.new(true, true).clean
     Bindings.new(true).clean
@@ -170,7 +163,6 @@ namespace :developing do
   task :clean_rebuild_all do
     Updater.new.clean
     Matcher.new(true, true).clean
-    Ansi.new(true, true).clean
     Utils.new(true, true).clean
     Client.new(true, true).clean
     Bindings.new(true).clean
@@ -207,93 +199,13 @@ namespace :test do
       end
     end
 
-    desc 'run search tests'
-    task :search do
+    desc 'run external tests'
+    task :external do
       Bindings.new(false).build
       Bindings.new(false).build_spec
       Reporter.print
       Shell.chdir(Paths::TS_BINDINGS) do
-        sh "#{Paths::JASMINE} spec/build/spec/session.search.spec.js"
-      end
-    end
-
-    desc 'run values tests'
-    task :values do
-      Bindings.new(false).build
-      Bindings.new(false).build_spec
-      Reporter.print
-      Shell.chdir(Paths::TS_BINDINGS) do
-        sh "#{Paths::JASMINE} spec/build/spec/session.values.spec.js"
-      end
-    end
-
-    desc 'run extract tests'
-    task :extract do
-      Bindings.new(false).build
-      Bindings.new(false).build_spec
-      Reporter.print
-      Shell.chdir(Paths::TS_BINDINGS) do
-        sh "#{Paths::JASMINE} spec/build/spec/session.extract.spec.js"
-      end
-    end
-
-    desc 'run ranges tests'
-    task :ranges do
-      Bindings.new(false).build
-      Bindings.new(false).build_spec
-      Reporter.print
-      Shell.chdir(Paths::TS_BINDINGS) do
-        sh "#{Paths::JASMINE} spec/build/spec/session.ranges.spec.js"
-      end
-    end
-
-    desc 'run exporting tests'
-    task :exporting do
-      Bindings.new(false).build
-      Bindings.new(false).build_spec
-      Reporter.print
-      Shell.chdir(Paths::TS_BINDINGS) do
-        sh "#{Paths::JASMINE} spec/build/spec/session.exporting.spec.js"
-      end
-    end
-
-    desc 'run map tests'
-    task :map do
-      Bindings.new(false).build
-      Bindings.new(false).build_spec
-      Reporter.print
-      Shell.chdir(Paths::TS_BINDINGS) do
-        sh "#{Paths::JASMINE} spec/build/spec/session.map.spec.js"
-      end
-    end
-
-    desc 'run observe tests'
-    task :observe do
-      Bindings.new(false).build
-      Bindings.new(false).build_spec
-      Reporter.print
-      Shell.chdir(Paths::TS_BINDINGS) do
-        sh "#{Paths::JASMINE} spec/build/spec/session.observe.spec.js"
-      end
-    end
-
-    desc 'run indexes tests'
-    task :indexes do
-      Bindings.new(false).build
-      Bindings.new(false).build_spec
-      Reporter.print
-      Shell.chdir(Paths::TS_BINDINGS) do
-        sh "#{Paths::JASMINE} spec/build/spec/session.indexes.spec.js"
-      end
-    end
-
-    desc 'run concat tests'
-    task :concat do
-      Bindings.new(false).build
-      Bindings.new(false).build_spec
-      Reporter.print
-      Shell.chdir(Paths::TS_BINDINGS) do
-        sh "#{Paths::JASMINE} spec/build/spec/session.concat.spec.js"
+        sh "#{Paths::JASMINE} spec/build/spec/session.external.spec.js"
       end
     end
 
@@ -317,16 +229,6 @@ namespace :test do
       end
     end
 
-    desc 'run stream tests'
-    task :stream do
-      Bindings.new(false).build
-      Bindings.new(false).build_spec
-      Reporter.print
-      Shell.chdir(Paths::TS_BINDINGS) do
-        sh "#{Paths::JASMINE} spec/build/spec/session.stream.spec.js"
-      end
-    end
-
     desc 'run promises tests'
     task :promises do
       Bindings.new(false).build
@@ -337,16 +239,8 @@ namespace :test do
       end
     end
 
-    desc 'run observing tests'
-    task :observing do
-      Bindings.new(false).build
-      Bindings.new(false).build_spec
-      Reporter.print
-      Shell.chdir(Paths::TS_BINDINGS) do
-        sh "#{Paths::JASMINE} spec/build/spec/session.observing.spec.js"
-      end
-    end
   end
+
   namespace :matcher do
     desc 'run karma tests'
     task :karma do
@@ -360,23 +254,6 @@ namespace :test do
     task :rust do
       Reporter.print
       Shell.chdir(Paths::MATCHER) do
-        sh 'wasm-pack test --node'
-      end
-    end
-  end
-  namespace :ansi do
-    desc 'run karma tests'
-    task :karma do
-      Reporter.print
-      Ansi.new(false, false).install
-      Shell.chdir("#{Paths::ANSI}/spec") do
-        sh 'npm run test'
-      end
-    end
-    desc 'run rust tests'
-    task :rust do
-      Reporter.print
-      Shell.chdir(Paths::ANSI) do
         sh 'wasm-pack test --node'
       end
     end
@@ -399,12 +276,8 @@ namespace :test do
     end
   end
   desc 'run all test'
-  task all: ['test:binding:observe', 'test:binding:concat', 'test:binding:extract',
-             'test:binding:ranges', 'test:binding:exporting', 'test:binding:search',
-             'test:binding:cancel', 'test:binding:errors', 'test:binding:map',
-             'test:binding:jobs', 'test:binding:promises', 'test:binding:values',
-             'test:binding:indexes', 'test:binding:stream', 'test:binding:observing',
-             'test:matcher:karma', 'test:ansi:karma', 'test:ansi:rust',
+  task all: ['test:binding:external', 'test:binding:cancel', 'test:binding:errors', 
+             'test:binding:jobs', 'test:binding:promises', 'test:matcher:karma', 
              'test:utils:karma', 'test:utils:rust', 'test:matcher:rust']
 end
 
@@ -467,14 +340,6 @@ namespace :clippy do
     Reporter.add(Jobs::Clippy, Owner::Matcher, "checked: #{Paths::MATCHER}", '')
   end
 
-  desc 'Clippy ansi'
-  task :ansi do
-    Shell.chdir("#{Paths::ANSI}/src") do
-      sh Paths::CLIPPY_NIGHTLY
-    end
-    Reporter.add(Jobs::Clippy, Owner::Ansi, "checked: #{Paths::ANSI}", '')
-  end
-
   desc 'Clippy utils'
   task :utils do
     Shell.chdir("#{Paths::UTILS}/src") do
@@ -492,7 +357,7 @@ namespace :clippy do
   end
 
   desc 'Clippy all'
-  task all: ['clippy:nightly', 'clippy:indexer', 'clippy:rs_bindings', 'clippy:matcher', 'clippy:ansi',
+  task all: ['clippy:nightly', 'clippy:indexer', 'clippy:rs_bindings', 'clippy:matcher',
              'clippy:utils', 'clippy:updater'] do
     Reporter.print
   end

@@ -17,7 +17,6 @@ module Owner
   Rustcore = 'Rustcore'
   Bindings = 'Bindings'
   Matcher = 'Matcher'
-  Ansi = 'Ansi'
   Utils = 'Utils'
   Updater = 'Updater'
   Release = 'Release'

@@ -84,7 +84,7 @@ pub fn elrust_log_config() -> PathBuf {
 pub fn initialize_from_fresh_yml() -> Result<()> {
     println!("Initialization of logs is started on rs-bindings layer");
     let log_config_path = elrust_log_config();
-    let indexer_log_path = elrust_home_dir().join("elrust.indexer.log");
+    let indexer_log_path = elrust_home_dir().join("elrust.rustcore.log");
     let launcher_log_path = elrust_home_dir().join("elrust.launcher.log");
     let log_config_content = std::include_str!("../log4rs.yaml")
         .replace("$INDEXER_LOG_PATH", &indexer_log_path.to_string_lossy())
@@ -132,7 +132,7 @@ pub fn setup_fallback_logging() -> Result<()> {
 
 //     println!("init logging");
 //     let home_dir = dirs::home_dir().expect("we need to have access to home-dir");
-//     let log_file_path = home_dir.join(".elrust").join("elrust.indexer.log");
+//     let log_file_path = home_dir.join(".elrust").join("elrust.rustcore.log");
 //     let log_config_path = home_dir.join(".elrust").join("log4rs.yaml");
 //     if !log_config_path.exists() {
 //         let log_config_content = std::include_str!("../log4rs.yaml")
@@ -165,7 +165,7 @@ pub fn setup_fallback_logging() -> Result<()> {
 //         Ok(_) => (),
 //         Err(e) => {
 //             eprintln!("could not initialize logging with init_file: {}", e);
-//             let log_path = home_dir.join(".elrust").join("elrust.indexer.log");
+//             let log_path = home_dir.join(".elrust").join("elrust.rustcore.log");
 //             let appender_name = "indexer-root";
 //             let logfile = FileAppender::builder()
 //                 .encoder(Box::new(PatternEncoder::new("{d} - {l}:: {m}\n")))

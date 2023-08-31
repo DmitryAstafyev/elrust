@@ -36,7 +36,6 @@ class Client
     install
     if @prod
       Matcher.new(true, true).build
-      Ansi.new(true, true).build
       Utils.new(true, true).build
       Shell.chdir(Paths::CLIENT) do
         Shell.sh 'yarn run prod'
@@ -44,7 +43,6 @@ class Client
       end
     else
       Matcher.new(false, false).build
-      Ansi.new(false, false).build
       Utils.new(false, false).build
       Shell.chdir(Paths::CLIENT) do
         Shell.sh 'yarn run build'
