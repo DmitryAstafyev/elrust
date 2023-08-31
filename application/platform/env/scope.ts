@@ -6,6 +6,7 @@ import { globals } from './globals';
 export class Scope {
     private _transport: Transport | undefined;
     private _logger: LoggerConstructor<any> | undefined;
+    private _vars: Map<string, unknown> = new Map();
 
     public setTransport(transport: Transport) {
         if (this._transport !== undefined) {
@@ -41,6 +42,14 @@ export class Scope {
         } else {
             return new this._logger(alias);
         }
+    }
+
+    public setVar(key: string, value: unknown) {
+        this._vars.set(key, value);
+    }
+
+    public getVar<T>(key: string): T | undefined {
+        return this._vars.get(key) as T;
     }
 }
 

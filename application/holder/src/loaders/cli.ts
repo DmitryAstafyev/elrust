@@ -1,9 +1,11 @@
-import { program as cli } from 'commander';
+import { program as cli, Option } from 'commander';
 import { CLIAction } from '@service/cli/action';
 import { spawn } from 'child_process';
 import { Socket } from 'net';
 import { WriteStream } from 'fs';
 import { logger } from './logger';
+
+import * as handlers from '@service/cli/index';
 
 const DEV_EXECUTOR_PATH = 'node_modules/electron/dist/electron';
 const DEV_EXECUTOR_PATH_DARVIN = 'node_modules/electron/dist/Electron.app/Contents/MacOS/Electron';
@@ -22,7 +24,9 @@ export function isDevelopingExecuting(path: string): boolean {
     return path.toLowerCase().indexOf(devPath.toLowerCase()) !== -1;
 }
 
-const CLI_HANDLERS: { [key: string]: CLIAction } = {};
+const CLI_HANDLERS: { [key: string]: CLIAction } = {
+    externallibpath: new handlers.ExternalLibAction(),
+};
 
 export function getActions(): CLIAction[] {
     return Object.keys(CLI_HANDLERS).map((k) => CLI_HANDLERS[k]);
@@ -36,7 +40,7 @@ function collectErrors(): Error[] {
     return errors;
 }
 
-function _parser(handler: CLIAction): (value: string, prev: string) => string {
+function parser(handler: CLIAction): (value: string, prev: string) => string {
     return handler.argument.bind(handler, process.cwd()) as unknown as (
         value: string,
         prev: string,
@@ -45,6 +49,18 @@ function _parser(handler: CLIAction): (value: string, prev: string) => string {
 
 function setup() {
     logger.write(`setup CLI: started`);
+    cli.addOption(
+        new Option(
+            '--debug_mode',
+            'Will run chipmunk in debug mode. Others CLI commands will be ignored.',
+        ),
+    );
+    cli.addOption(new Option(RESTARTING_FLAG, 'Hidden option to manage CLI usage').hideHelp());
+    cli.addOption(
+        new Option('-l, --lib <parser>', 'Set path to external lib').argParser(
+            parser(CLI_HANDLERS['externallibpath']),
+        ),
+    );
     cli.parse();
     logger.write(`setup CLI: done and parsered`);
 }
@@ -108,6 +124,7 @@ function check() {
     // - check and kill previous process by given PID
     setup();
     if (isRestartedAlready()) {
+        logger.write(`application already restarted`);
         return;
     }
     if (!isTTY()) {
