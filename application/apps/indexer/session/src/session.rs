@@ -28,7 +28,7 @@ pub struct Session {
 }
 
 impl Session {
-    /// Starts a new chipmunk session
+    /// Starts a new elrust session
     ///
     /// use `uuid` as the handle to refer to this session
     /// This method will spawn a new task that runs the operations loop and

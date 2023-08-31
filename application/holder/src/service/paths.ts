@@ -14,7 +14,7 @@ import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs';
 
-const HOME_FOLDER = '.chipmunk';
+const HOME_FOLDER = '.elrust';
 const DOWNLOADS_FOLDER = 'downloads';
 const TMP_FOLDER = 'tmp';
 const APPS_FOLDER = 'apps';
@@ -194,7 +194,7 @@ export class Service extends Implementation {
 
     /**
      * Returns path to executable file
-     * @holder { boolean } in true returns chipmunk.app, instead chipmunk.app/Contents/MacOS/chipmunk. This argument is actual only for darwin
+     * @holder { boolean } in true returns elrust.app, instead elrust.app/Contents/MacOS/elrust. This argument is actual only for darwin
      * @returns string
      */
     public getExec(holder = false): string {
@@ -246,7 +246,7 @@ export class Service extends Implementation {
 
     /**
      * @MacOS only
-     * Check is application file (chipmunk.app) located in system folder like "tmp" or "Downloads".
+     * Check is application file (elrust.app) located in system folder like "tmp" or "Downloads".
      * @returns boolean
      */
     public doesLocatedInSysFolder(): boolean {

@@ -13,9 +13,6 @@ import { OperationStat } from '../interfaces/index';
 export { ISessionEvents } from '../api/session.provider';
 export { EventProvider };
 
-export * as $ from 'platform/types/observe';
-export * as Factory from 'platform/types/observe/factory';
-
 enum ESessionState {
     destroyed,
     available,

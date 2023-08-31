@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "chipmunk": {
+    "elrust": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -74,10 +74,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "chipmunk:build:production"
+              "browserTarget": "elrust:build:production"
             },
             "development": {
-              "browserTarget": "chipmunk:build:development"
+              "browserTarget": "elrust:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -85,7 +85,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "chipmunk:build"
+            "browserTarget": "elrust:build"
           }
         },
         "test": {

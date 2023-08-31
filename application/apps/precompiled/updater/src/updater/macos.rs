@@ -5,7 +5,7 @@ use crate::{
 use fs_extra::dir;
 use std::fs;
 
-const DEFAULT_MAC_APP_FOLDER: &str = "chipmunk.app";
+const DEFAULT_MAC_APP_FOLDER: &str = "elrust.app";
 
 pub struct PlatformUpdater {
     args: Arguments,
@@ -30,7 +30,7 @@ impl Updater for PlatformUpdater {
             .map_err(UpdateError::CompressedError)?;
         // Rename application if it was renamed by user
         if self.args.app_name != *DEFAULT_MAC_APP_FOLDER {
-            log::debug!("Chipmunk application folder had been renamed by user to {:?}; downloaded version of application should be renamed too.", self.args.app_name);
+            log::debug!("elrust application folder had been renamed by user to {:?}; downloaded version of application should be renamed too.", self.args.app_name);
             let renamed_app_name = self.compressed.location.join(&self.args.app_name);
             if renamed_app_name.exists() {
                 log::debug!("Detected {renamed_app_name:?}. This app-bundle will be removed",);
@@ -46,7 +46,7 @@ impl Updater for PlatformUpdater {
             )
             .map_err(|e| UpdateError::IO(format!("Fail to do renaming: {e}")))?;
             log::debug!(
-                "Chipmunk application has been renamed to {:?}",
+                "elrust application has been renamed to {:?}",
                 renamed_app_name
             );
         }

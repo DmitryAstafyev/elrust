@@ -49,7 +49,7 @@ fn init_module() {
 }
 
 pub fn init_logging() -> Result<()> {
-    let log_config_path = chipmunk_log_config();
+    let log_config_path = elrust_log_config();
     let logging_correctly_initialized = if log_config_path.exists() {
         // log4rs.yaml exists, try to parse it
         match log4rs::init_file(&log_config_path, Default::default()) {
@@ -70,10 +70,10 @@ pub fn init_logging() -> Result<()> {
     Ok(())
 }
 
-pub fn chipmunk_home_dir() -> PathBuf {
+pub fn elrust_home_dir() -> PathBuf {
     let home_dir = dirs::home_dir()
         .expect("we need to have access to home-dir")
-        .join(".chipmunk");
+        .join(".elrust");
     if !home_dir.exists() {
         fs::create_dir(&home_dir)
             .unwrap_or_else(|_| panic!("home folder {:?} should be created", home_dir));
@@ -81,15 +81,15 @@ pub fn chipmunk_home_dir() -> PathBuf {
     home_dir
 }
 
-pub fn chipmunk_log_config() -> PathBuf {
-    chipmunk_home_dir().join("log4rs.yaml")
+pub fn elrust_log_config() -> PathBuf {
+    elrust_home_dir().join("log4rs.yaml")
 }
 
 pub fn initialize_from_fresh_yml() -> Result<()> {
     println!("Initialization of logs is started on rs-bindings layer");
-    let log_config_path = chipmunk_log_config();
-    let indexer_log_path = chipmunk_home_dir().join("chipmunk.indexer.log");
-    let launcher_log_path = chipmunk_home_dir().join("chipmunk.launcher.log");
+    let log_config_path = elrust_log_config();
+    let indexer_log_path = elrust_home_dir().join("elrust.indexer.log");
+    let launcher_log_path = elrust_home_dir().join("elrust.launcher.log");
     let log_config_content = std::include_str!("../log4rs.yaml")
         .replace("$INDEXER_LOG_PATH", &indexer_log_path.to_string_lossy())
         .replace("$LAUNCHER_LOG_PATH", &launcher_log_path.to_string_lossy());
@@ -114,7 +114,7 @@ pub fn remove_entity(entity: &Path) -> Result<()> {
 
 pub fn setup_fallback_logging() -> Result<()> {
     println!("[setup_fallback_logging]: Initialization of logs is started on rs-bindings layer");
-    let log_path = chipmunk_home_dir().join("chipmunk.launcher.log");
+    let log_path = elrust_home_dir().join("elrust.launcher.log");
     let appender_name = "startup-appender";
     let logfile = FileAppender::builder()
         .encoder(Box::new(PatternEncoder::new("{d} - {l}:: {m}\n")))
@@ -136,8 +136,8 @@ pub fn setup_fallback_logging() -> Result<()> {
 
 //     println!("init logging");
 //     let home_dir = dirs::home_dir().expect("we need to have access to home-dir");
-//     let log_file_path = home_dir.join(".chipmunk").join("chipmunk.indexer.log");
-//     let log_config_path = home_dir.join(".chipmunk").join("log4rs.yaml");
+//     let log_file_path = home_dir.join(".elrust").join("elrust.indexer.log");
+//     let log_config_path = home_dir.join(".elrust").join("log4rs.yaml");
 //     if !log_config_path.exists() {
 //         let log_config_content = std::include_str!("../log4rs.yaml")
 //             .replace("$LOG_FILE_PATH", &log_file_path.to_string_lossy())
@@ -169,7 +169,7 @@ pub fn setup_fallback_logging() -> Result<()> {
 //         Ok(_) => (),
 //         Err(e) => {
 //             eprintln!("could not initialize logging with init_file: {}", e);
-//             let log_path = home_dir.join(".chipmunk").join("chipmunk.indexer.log");
+//             let log_path = home_dir.join(".elrust").join("elrust.indexer.log");
 //             let appender_name = "indexer-root";
 //             let logfile = FileAppender::builder()
 //                 .encoder(Box::new(PatternEncoder::new("{d} - {l}:: {m}\n")))

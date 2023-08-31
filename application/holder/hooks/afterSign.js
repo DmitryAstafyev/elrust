@@ -19,7 +19,7 @@ exports.default = async function notarizing(context) {
     }
 
     return await notarize({
-        appBundleId: 'com.esrlabs.chipmunk',
+        appBundleId: 'com.esrlabs.elrust',
         appPath: `${appOutDir}/${appName}.app`,
         appleId: process.env.APPLEID,
         appleIdPassword: process.env.APPLEIDPASS,

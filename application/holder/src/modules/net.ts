@@ -24,7 +24,7 @@ export class Net extends Module {
     }
 
     public getUserAgent(): string {
-        return `Chipmunk@${version.getVersion()}`;
+        return `Elrust@${version.getVersion()}`;
     }
 
     public getURL(uri: string): url.URL | Error {

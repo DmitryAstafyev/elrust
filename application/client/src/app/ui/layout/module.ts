@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ContainersModule } from '@elements/containers/module';
 import { AppDirectiviesModule } from '@directives/module';
 import { ElementsModule } from '@elements/module';
-import { RecentActionsModule } from '@elements/recent/module';
 import { LayoutHomeModule } from './workspace/no-tabs-content/module';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -31,9 +30,6 @@ import { LayoutSnackBarMessage } from './snackbar/message/component';
 
 import { OverlayModule } from '@angular/cdk/overlay';
 import { JobsModule } from '@views/statusbar/jobs/module';
-import { SessionModule } from '@views/statusbar/session/module';
-
-// import { AppsBarStatusModule } from '../statusbar/module';
 
 const entryComponents = [
     Layout,
@@ -66,13 +62,11 @@ const entryComponents = [
         MatIconModule,
         MatMenuModule,
         JobsModule,
-        SessionModule,
-        RecentActionsModule,
         LayoutHomeModule,
         OverlayModule,
     ],
     declarations: [...entryComponents],
     exports: [...entryComponents, AppDirectiviesModule],
-    bootstrap: [...entryComponents, LayoutHomeModule, ElementsModule]
+    bootstrap: [...entryComponents, LayoutHomeModule, ElementsModule],
 })
 export class LayoutModule {}

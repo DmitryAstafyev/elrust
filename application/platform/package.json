@@ -1,7 +1,7 @@
 {
     "name": "platform",
     "version": "3.9.0",
-    "description": "Platform for Chipmunk",
+    "description": "Platform for Elrust",
     "author": {
         "name": "Dmitry Astafyev",
         "email": "dmitry.astafyev@esrlabs.com",
@@ -9,7 +9,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/esrlabs/chipmunk.git"
+        "url": "https://github.com/DmitryAstafyev/elrust.git"
     },
     "contributors": [
         {

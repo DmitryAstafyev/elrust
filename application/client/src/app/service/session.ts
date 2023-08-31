@@ -1,10 +1,4 @@
-import {
-    SetupService,
-    Interface,
-    Implementation,
-    register,
-    DependOn,
-} from '@platform/entity/service';
+import { SetupService, Interface, Implementation, register } from '@platform/entity/service';
 import { services } from '@register/services';
 import { ilc, Emitter, Channel } from '@service/ilc';
 import { TabsService, ITab, ITabAPI } from '@elements/tabs/service';
@@ -15,17 +9,9 @@ import { LockToken } from '@platform/env/lock.token';
 import { components } from '@env/decorators/initial';
 import { TabControls } from './session/tab';
 import { unique } from '@platform/env/sequence';
-import { history } from '@service/history';
-import { Render } from '@schema/render';
-import { File } from '@platform/types/files';
-import { Observe } from '@platform/types/observe';
-import { getRender } from '@schema/render/tools';
-import { TabObserve } from '@tabs/observe/component';
-import { recent } from '@service/recent';
 
 export { Session, TabControls, UnboundTab, Base };
 
-@DependOn(history)
 @SetupService(services['session'])
 export class Service extends Implementation {
     private _emitter!: Emitter;
@@ -95,7 +81,7 @@ export class Service extends Implementation {
     }
 
     public add(bind = true): {
-        empty: (render: Render<unknown>) => Promise<Session>;
+        empty: () => Promise<Session>;
         unbound: (opts: {
             tab: ITab;
             sidebar?: boolean;
@@ -113,12 +99,12 @@ export class Service extends Implementation {
             this._emitter.session.open(session);
         };
         return {
-            empty: (render: Render<unknown>): Promise<Session> => {
+            empty: (): Promise<Session> => {
                 if (this._locker.isLocked()) {
                     return Promise.reject(new Error(`Sessions aren't available yet`));
                 }
                 return new Promise((resolve, reject) => {
-                    this.create(render)
+                    this.create()
                         .then((session: Session) => {
                             binding(session.uuid(), session, 'Empty');
                             resolve(session);
@@ -221,140 +207,8 @@ export class Service extends Implementation {
         return smth instanceof Session ? smth : undefined;
     }
 
-    public initialize(): {
-        auto(observe: Observe, session?: Session): Promise<string | undefined>;
-        configure(observe: Observe, session?: Session): Promise<string | undefined>;
-        observe(observe: Observe, session?: Session): Promise<string>;
-        multiple(files: File[]): Promise<string | undefined>;
-    } {
-        return {
-            auto: (observe: Observe, session?: Session): Promise<string | undefined> => {
-                return observe.locker().is()
-                    ? this.initialize().observe(observe, session)
-                    : this.initialize().configure(observe, session);
-            },
-            configure: (observe: Observe, session?: Session): Promise<string | undefined> => {
-                return new Promise((resolve) => {
-                    const api = this.add().tab({
-                        name: observe.origin.title(),
-                        content: {
-                            factory: TabObserve,
-                            inputs: TabObserve.inputs({
-                                observe,
-                                api: {
-                                    finish: (observe: Observe): Promise<void> => {
-                                        return new Promise((_, failed) => {
-                                            this.initialize()
-                                                .observe(observe, session)
-                                                .then((session) => {
-                                                    api?.close();
-                                                    resolve(session);
-                                                })
-                                                .catch((err: Error) => {
-                                                    failed(err);
-                                                });
-                                        });
-                                    },
-                                    cancel: (): void => {
-                                        api?.close();
-                                        resolve(undefined);
-                                    },
-                                    tab: (): TabControls => {
-                                        return api as unknown as TabControls;
-                                    },
-                                },
-                            }),
-                        },
-                        active: true,
-                    });
-                });
-            },
-            observe: async (observe: Observe, existed?: Session): Promise<string> => {
-                const render = getRender(observe);
-                if (render instanceof Error) {
-                    throw render;
-                }
-                const session =
-                    existed !== undefined ? existed : await this.add(false).empty(render);
-                return new Promise((resolve, reject) => {
-                    session.stream
-                        .observe()
-                        .start(observe)
-                        .then((uuid: string) => {
-                            if (existed === undefined) {
-                                const error = this.bind(
-                                    session.uuid(),
-                                    observe.origin.desc().major,
-                                    true,
-                                );
-                                if (error instanceof Error) {
-                                    this.log().error(`Fail to bind session: ${error.message}`);
-                                }
-                                recent.add(observe).catch((err: Error) => {
-                                    this.log().error(
-                                        `Fail to save action as recent: ${err.message}`,
-                                    );
-                                });
-                            }
-                            resolve(uuid);
-                        })
-                        .catch((err: Error) => {
-                            if (existed !== undefined) {
-                                return reject(err);
-                            }
-                            this.kill(session.uuid())
-                                .catch((closeErr: Error) => {
-                                    this.log().error(`Fail to close session: ${closeErr.message}`);
-                                })
-                                .finally(() => {
-                                    reject(err);
-                                });
-                        });
-                });
-            },
-            multiple: (files: File[]): Promise<string | undefined> => {
-                return new Promise((resolve, reject) => {
-                    const api = this.add().tab({
-                        name: 'Multiple Files',
-                        content: {
-                            factory: components.get('app-tabs-source-multiple-files'),
-                            inputs: {
-                                files,
-                                setTitle: (title: string) => {
-                                    api?.setTitle(title);
-                                },
-                                done: (observe: Observe) => {
-                                    this.initialize()
-                                        .observe(observe)
-                                        .then((session) => {
-                                            resolve(session);
-                                        })
-                                        .catch((err: Error) => {
-                                            this.log().error(
-                                                `Fail to setup observe: ${err.message}`,
-                                            );
-                                            reject(err);
-                                        })
-                                        .finally(() => {
-                                            api?.close();
-                                        });
-                                },
-                                cancel: () => {
-                                    api?.close();
-                                    resolve(undefined);
-                                },
-                            },
-                        },
-                        active: true,
-                        closable: true,
-                    });
-                });
-            },
-        };
-    }
-
-    protected create(render: Render<unknown>): Promise<Session> {
-        const session = new Session(render);
+    protected create(): Promise<Session> {
+        const session = new Session();
         return session.init().then((_uuid: string) => {
             this._emitter.session.created(session);
             return session;

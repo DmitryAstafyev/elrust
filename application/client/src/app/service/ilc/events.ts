@@ -1,5 +1,4 @@
 import { Subject } from '@platform/env/subscription';
-import { Row } from '@schema/content/row';
 import { Base } from '../session/base';
 import { Session } from '../session/session';
 
@@ -57,9 +56,6 @@ export class Events {
         };
         layout: {
             resize: Subject<void>;
-        };
-        row: {
-            hover: Subject<Row | undefined>;
         };
         input: {
             focused: Subject<void>;
@@ -138,9 +134,6 @@ export class Events {
             input: {
                 focused: this._add<void>(new Subject<void>()),
                 blur: this._add<void>(new Subject<void>()),
-            },
-            row: {
-                hover: this._add<Row | undefined>(new Subject<Row | undefined>()),
             },
         };
     }

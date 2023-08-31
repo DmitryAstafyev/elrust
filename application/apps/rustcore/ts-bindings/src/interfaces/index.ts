@@ -1,2 +1,2 @@
-export { Logger, TLogFunc, IChipmunkNodeGlobal } from 'platform/interfaces/interface.node.global';
+export { Logger } from 'platform/log';
 export { OperationStat } from '../interfaces/debug';

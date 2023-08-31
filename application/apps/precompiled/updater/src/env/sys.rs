@@ -15,7 +15,7 @@ fn spawn(exe: &str, args: &[&str]) -> Result<Child> {
 
 pub fn start(app: PathBuf) -> Result<()> {
     let to_be_started: PathBuf = if cfg!(target_os = "macos") {
-        app.join("Contents/MacOS/chipmunk")
+        app.join("Contents/MacOS/elrust")
     } else {
         app
     };

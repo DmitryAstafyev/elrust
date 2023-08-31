@@ -10,10 +10,10 @@ import { KeysMap, KeyDescription, Requirement } from 'platform/types/hotkeys/map
 import { app, globalShortcut, powerMonitor, BrowserWindow } from 'electron';
 import { electron } from '@service/electron';
 import { CancelablePromise } from 'platform/env/promise';
-import { ChipmunkGlobal } from '@register/global';
+import { ElrustGlobal } from '@register/global';
 import { Listeners } from 'platform/env/subscription';
 
-declare const global: ChipmunkGlobal;
+declare const global: ElrustGlobal;
 
 import * as Events from 'platform/ipc/event';
 import * as Requests from 'platform/ipc/request';

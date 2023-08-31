@@ -1,39 +1,16 @@
 import { TabsService, ITabAPI, ETabsListDirection, TabsOptions } from '@elements/tabs/service';
 import { Storage } from '@env/storage';
-import { Stream } from './dependencies/stream';
-import { Search } from './dependencies/search';
-import { Charts } from './dependencies/charts';
-import { Indexed } from './dependencies/indexed';
-import { Cursor } from './dependencies/cursor';
 import { SetupLogger, LoggerInterface } from '@platform/entity/logger';
 import { cutUuid } from '@log/index';
-import { Render } from '@schema/render';
 import { components } from '@env/decorators/initial';
 import { Base } from './base';
-import { Bookmarks } from './dependencies/bookmarks';
-import { Exporter } from './dependencies/exporter';
-import { IRange, fromIndexes } from '@platform/types/range';
-import { Providers } from './dependencies/observing/providers';
-import { Attachments } from './dependencies/attachments';
 
 import * as ids from '@schema/ids';
 import * as Requests from '@platform/ipc/request';
 
-export { Stream };
-
 @SetupLogger()
 export class Session extends Base {
     public readonly storage: Storage = new Storage();
-    public readonly stream: Stream = new Stream();
-    public readonly search: Search = new Search();
-    public readonly charts: Charts = new Charts();
-    public readonly indexed: Indexed = new Indexed();
-    public readonly bookmarks: Bookmarks = new Bookmarks();
-    public readonly cursor: Cursor = new Cursor();
-    public readonly exporter: Exporter = new Exporter();
-    public readonly render: Render<unknown>;
-    public readonly observed: Providers = new Providers();
-    public readonly attachments: Attachments = new Attachments();
 
     private _uuid!: string;
     private _tab!: ITabAPI;
@@ -43,9 +20,8 @@ export class Session extends Base {
     });
     protected inited: boolean = false;
 
-    constructor(render: Render<unknown>) {
+    constructor() {
         super();
-        this.render = render;
         this._toolbar.add({
             uuid: ids.TOOLBAR_TAB_SEARCH,
             name: 'Search',
@@ -54,71 +30,6 @@ export class Session extends Base {
             uppercaseTitle: true,
             content: {
                 factory: components.get('app-views-search'),
-                inputs: {
-                    session: this,
-                },
-            },
-        });
-        this._toolbar.add({
-            uuid: ids.TOOLBAR_TAB_DETAILS,
-            name: 'Details',
-            active: false,
-            closable: false,
-            uppercaseTitle: true,
-            content: {
-                factory: components.get('app-views-details'),
-                inputs: {
-                    session: this,
-                },
-            },
-        });
-        this._toolbar.add({
-            uuid: ids.TOOLBAR_TAB_PRESET,
-            name: 'Presets / History',
-            active: false,
-            closable: false,
-            uppercaseTitle: true,
-            content: {
-                factory: components.get('app-views-history'),
-                inputs: {
-                    session: this,
-                },
-            },
-        });
-        this._toolbar.add({
-            uuid: ids.TOOLBAR_TAB_CHART,
-            name: 'Chart',
-            active: false,
-            closable: false,
-            uppercaseTitle: true,
-            content: {
-                factory: components.get('app-views-chart'),
-                inputs: {
-                    session: this,
-                },
-            },
-        });
-        this._sidebar.add({
-            uuid: ids.SIDEBAR_TAB_OBSERVING,
-            name: 'Observing',
-            active: false,
-            closable: false,
-            uppercaseTitle: true,
-            content: {
-                factory: components.get('app-views-observe-list'),
-                inputs: {
-                    session: this,
-                },
-            },
-        });
-        this._sidebar.add({
-            uuid: ids.SIDEBAR_TAB_ATTACHMENTS,
-            name: 'Attachments',
-            active: false,
-            closable: false,
-            uppercaseTitle: true,
-            content: {
-                factory: components.get('app-views-attachments-list'),
                 inputs: {
                     session: this,
                 },
@@ -148,15 +59,6 @@ export class Session extends Base {
                 .then((response) => {
                     this.setLoggerName(`Session: ${cutUuid(response.uuid)}`);
                     this._uuid = response.uuid;
-                    this.stream.init(this._uuid);
-                    this.cursor.init(this._uuid);
-                    this.indexed.init(this._uuid);
-                    this.bookmarks.init(this._uuid, this.stream, this.cursor);
-                    this.search.init(this._uuid);
-                    this.exporter.init(this._uuid, this.stream, this.indexed);
-                    this.observed.init(this);
-                    this.attachments.init(this._uuid);
-                    this.charts.init(this._uuid, this.stream, this.search);
                     this.inited = true;
                     resolve(this._uuid);
                 })
@@ -166,15 +68,6 @@ export class Session extends Base {
 
     public destroy(): Promise<void> {
         this.storage.destroy();
-        this.search.destroy();
-        this.indexed.destroy();
-        this.stream.destroy();
-        this.bookmarks.destroy();
-        this.cursor.destroy();
-        this.exporter.destroy();
-        this.observed.destroy();
-        this.attachments.destroy();
-        this.charts.destroy();
         this.unsubscribe();
         if (!this.inited) {
             return Promise.resolve();
@@ -237,22 +130,6 @@ export class Session extends Base {
 
     public close(): void {
         this._tab.close();
-    }
-
-    public selection(): {
-        indexes(): number[];
-        ranges(): IRange[];
-    } {
-        return {
-            indexes: (): number[] => {
-                const selected = this.cursor.get().slice();
-                selected.sort((a, b) => (a > b ? 1 : -1));
-                return selected;
-            },
-            ranges: (): IRange[] => {
-                return fromIndexes(this.selection().indexes());
-            },
-        };
     }
 
     public title(): {

@@ -6,7 +6,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-// NOTE: Chipmunk's partial copying of VSCode solution. Related modules/libs:
+// NOTE: Elrust's partial copying of VSCode solution. Related modules/libs:
 // https://github.com/microsoft/vscode/blob/main/src/vs/workbench/contrib/terminal/node/terminalProfiles.ts
 // https://github.com/microsoft/vscode/blob/main/src/vs/workbench/contrib/terminal/node/terminalEnvironment.ts
 // https://github.com/microsoft/vscode/blob/main/src/vs/base/node/pfs.ts

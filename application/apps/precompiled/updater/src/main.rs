@@ -21,9 +21,9 @@ pub enum GeneralError {
 
 fn main() -> Result<(), GeneralError> {
     let version = env::sys::version();
-    println!("[updater ver: {version}] Updating chipmunk...");
+    println!("[updater ver: {version}] Updating elrust...");
     println!(
-        "Please do not close this terminal, it will be closed as soon as chipmunk will be updated."
+        "Please do not close this terminal, it will be closed as soon as elrust will be updated."
     );
     env::logs::initialize_from_fresh_yml().map_err(|e| {
         eprintln!("Couldn't initialize logging: {e}");
@@ -39,7 +39,7 @@ fn main() -> Result<(), GeneralError> {
         log::error!("Fail to update: {e:?}");
         GeneralError::UpdateError(e)
     })?;
-    log::debug!("Chipmunk has been updated");
+    log::debug!("elrust has been updated");
     env::sys::start(app_path).map_err(|e| {
         log::error!("Fail to restart application: {e}");
         GeneralError::SysError(e.to_string())

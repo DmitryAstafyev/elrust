@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FiltersModule } from './search/module';
-import { ObservedModule } from './observe/module';
-import { AttachmentsModule } from './attachments/module';
+import { ToolbarAppModule } from './sidebarapp/module';
 
 @NgModule({
-    imports: [CommonModule, FiltersModule, ObservedModule, AttachmentsModule],
+    imports: [CommonModule, ToolbarAppModule],
     declarations: [],
-    exports: [FiltersModule],
+    exports: [ToolbarAppModule],
 })
 export class SidebarModule {}

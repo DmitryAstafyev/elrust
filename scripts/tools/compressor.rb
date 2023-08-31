@@ -6,7 +6,7 @@ class Compressor
 
   def compress
     target = if OS.mac?
-               './chipmunk.app'
+               './elrust.app'
              else
                '* .release'
              end

@@ -38,24 +38,12 @@ export const services: { [key: string]: Inputs } = {
         name: 'Bridge',
         uuid: v4(),
     },
-    recent: {
-        name: 'Recent',
-        uuid: v4(),
-    },
     tabs: {
         name: 'Tabs',
         uuid: v4(),
     },
     hotkeys: {
         name: 'Hotkeys',
-        uuid: v4(),
-    },
-    history: {
-        name: 'History',
-        uuid: v4(),
-    },
-    cli: {
-        name: 'Cli',
         uuid: v4(),
     },
     actions: {
@@ -68,10 +56,6 @@ export const services: { [key: string]: Inputs } = {
     },
     sys: {
         name: 'Sys',
-        uuid: v4(),
-    },
-    favorites: {
-        name: 'Favorites',
         uuid: v4(),
     },
     changelogs: {

@@ -8,6 +8,6 @@ export interface IApplication {
     };
 }
 
-export interface ChipmunkGlobal extends Global {
+export interface ElrustGlobal extends Global {
     application: IApplication;
 }

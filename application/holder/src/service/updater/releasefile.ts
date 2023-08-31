@@ -2,7 +2,7 @@ import { Platform, getPlatform } from '@env/os/platform';
 
 import * as os from 'os';
 
-const NAME = 'chipmunk';
+const NAME = 'elrust';
 const HOOKS = {
     name: '<name>',
     version: '<version>',

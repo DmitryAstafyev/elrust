@@ -9,15 +9,12 @@ import { session, Service as SessionService } from '@service/session';
 import { jobs, Service as JobsService } from '@service/jobs';
 import { state, Service as StateService } from '@service/state';
 import { bridge, Service as BridgeService } from '@service/bridge';
-import { recent, Service as RecentService } from '@service/recent';
 import { hotkeys, Service as HotkeysService } from '@service/hotkeys';
-import { history, Service as HistoryService } from '@service/history';
 import { listener, Service as ListenerService } from '@ui/service/listener';
 import { lockers, Service as LockersService } from '@ui/service/lockers';
 import { env, Service as EnvService } from '@service/env';
 import { actions, Service as ActionsService } from '@service/actions';
 import { settings, Service as Settings } from '@service/settings';
-import { favorites, Service as Favorites } from '@service/favorites';
 import { sys, Service as Sys } from '@service/sys';
 import { changelogs, Service as Changelogs } from '@service/changelogs';
 
@@ -29,13 +26,10 @@ export class Services {
         state: StateService;
         jobs: JobsService;
         bridge: BridgeService;
-        recent: RecentService;
         hotkeys: HotkeysService;
-        history: HistoryService;
         env: EnvService;
         actions: ActionsService;
         settings: Settings;
-        favorites: Favorites;
         sys: Sys;
         changelogs: Changelogs;
     };
@@ -62,13 +56,10 @@ export class Services {
             state,
             jobs,
             bridge,
-            recent,
             hotkeys,
-            history,
             env,
             actions,
             settings,
-            favorites,
             sys,
             changelogs,
         };

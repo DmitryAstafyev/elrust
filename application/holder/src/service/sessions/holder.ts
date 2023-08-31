@@ -5,7 +5,6 @@ import { scope } from 'platform/env/scope';
 import { Logger } from 'platform/log';
 import { jobs } from '@service/jobs';
 import { ICancelablePromise } from 'platform/env/promise';
-import { $ } from 'rustcore';
 
 import * as Events from 'platform/ipc/event';
 
@@ -18,8 +17,6 @@ export class Holder {
     public readonly session: Session;
     public readonly subscriber: Subscriber;
     private readonly _jobs: Map<string, JobsTracker> = new Map();
-    private readonly _observers: Map<string, { source: $.Observe; observer: ICancelablePromise }> =
-        new Map();
     private readonly _logger: Logger;
     protected _shutdown = false;
 
@@ -56,7 +53,7 @@ export class Holder {
                     );
                 })
                 .finally(() => {
-                    this._observers.clear();
+                    this._jobs.clear();
                     this.session.destroy().then(resolve).catch(reject);
                 });
         });

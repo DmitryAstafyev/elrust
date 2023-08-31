@@ -14,7 +14,7 @@ const CSettings: {
     user: string;
     uri: string;
 } = {
-    user: 'esrlabs',
+    user: 'DmitryAstafyev',
     uri: 'https://api.github.com/repos/',
 };
 

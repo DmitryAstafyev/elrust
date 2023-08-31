@@ -1,5 +1,3 @@
-import { File, Stat, getFileExtention } from 'platform/types/files';
-import { getFileTypeByFilename } from 'platform/types/observe/types/file';
 import { error } from 'platform/log/utils';
 
 import * as obj from 'platform/env/obj';
@@ -46,7 +44,7 @@ export async function getFilesFromFolder(folders: string[], exts: string[]): Pro
         }
     }
     return files.filter((file) => {
-        const ext = getFileExtention(file).toLowerCase();
+        const ext = path.extname(file).toLowerCase();
         if (exts.length === 0) {
             return true;
         } else {
@@ -71,59 +69,5 @@ export function getFolders(paths: string[]): string[] | Error {
             return check;
         });
         return error !== undefined ? error : folders;
-    }
-}
-
-export function getFileEntities(files: string[]): File[] | Error {
-    if (files.length === 0) {
-        return [];
-    } else {
-        try {
-            return files
-                .map((filename: string) => {
-                    const entity: File | Error | undefined = getFileEntity(filename);
-                    if (entity instanceof Error) {
-                        throw entity;
-                    }
-                    return entity;
-                })
-                .filter((f) => f !== undefined) as File[];
-        } catch (e) {
-            return new Error(error(e));
-        }
-    }
-}
-
-export function getFileEntity(filename: string): File | undefined | Error {
-    try {
-        const stat = fs.statSync(filename);
-        if (!stat.isFile()) {
-            return undefined;
-        }
-        return {
-            filename,
-            ext: path.extname(filename),
-            path: path.dirname(filename),
-            name: path.basename(filename),
-            stat: obj.from<Stat>(stat, [
-                'dev',
-                'ino',
-                'mode',
-                'nlink',
-                'uid',
-                'gid',
-                'rdev',
-                'size',
-                'blksize',
-                'blocks',
-                'atimeMs',
-                'mtimeMs',
-                'ctimeMs',
-                'birthtimeMs',
-            ]),
-            type: getFileTypeByFilename(filename),
-        };
-    } catch (_) {
-        return new Error(`Fail to get stat info for "${filename}"`);
     }
 }

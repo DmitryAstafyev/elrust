@@ -1,18 +1,13 @@
 {
-    "name": "chipmunk",
+    "name": "elrust",
     "version": "3.9.7",
-    "chipmunk": {
+    "elrust": {
         "versions": {}
     },
     "description": "LogViewer Tool",
-    "author": {
-        "name": "Oliver Mueller",
-        "email": "oliver.mueller@esrlabs.com",
-        "url": "https://www.esrlabs.com/"
-    },
     "repository": {
         "type": "git",
-        "url": "https://github.com/esrlabs/chipmunk.git"
+        "url": "https://github.com/DmitryAstafyev/elrust.git"
     },
     "contributors": [
         {
@@ -25,8 +20,8 @@
     "copyright": "Copyright © 2023 year ESR Labs",
     "build": {
         "asar": true,
-        "appId": "com.esrlabs.chipmunk",
-        "productName": "chipmunk",
+        "appId": "com.esrlabs.elrust",
+        "productName": "elrust",
         "copyright": "Copyright © 2022 year ESR Labs",
         "files": [
             "./dist/**",
@@ -53,10 +48,10 @@
         "afterSign": "hooks/afterSign.js",
         "mac": {
             "category": "public.app-category.developer-tools",
-            "icon": "resources/mac/chipmunk.icns",
+            "icon": "resources/mac/elrust.icns",
             "target": [],
             "binaries": [
-                "./release/mac/chipmunk.app/Contents/Resources/bin/updater"
+                "./release/mac/elrust.app/Contents/Resources/bin/updater"
             ],
             "extendInfo": {
                 "NSCameraUsageDescription": "",
@@ -69,12 +64,12 @@
         },
         "linux": {
             "icon": "resources/icons/png/256.png",
-            "executableName": "chipmunk",
-            "desktop": "resources/linux/chipmunk.desktop",
+            "executableName": "elrust",
+            "desktop": "resources/linux/elrust.desktop",
             "target": []
         },
         "win": {
-            "icon": "resources/win/chipmunk.ico",
+            "icon": "resources/win/elrust.ico",
             "target": [],
             "publisherName": "ESR Labs"
         }

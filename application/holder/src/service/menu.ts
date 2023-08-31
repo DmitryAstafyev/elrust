@@ -10,13 +10,11 @@ import { cli } from '@service/cli';
 import { Menu, MenuItem } from 'electron';
 import { notifications } from '@service/notifications';
 import { unique } from 'platform/env/sequence';
-import { FileType } from 'platform/types/observe/types/file';
-import { ChipmunkGlobal } from '@register/global';
+import { ElrustGlobal } from '@register/global';
 
 import * as Actions from './actions';
-import * as $ from 'platform/types/observe';
 
-declare const global: ChipmunkGlobal;
+declare const global: ElrustGlobal;
 
 @DependOn(notifications)
 @DependOn(cli)
@@ -37,13 +35,11 @@ export class Service extends Implementation {
     }
 
     protected async generate(): Promise<MenuItem[]> {
-        const cliSupported = await cli.support().available();
-        const cliInstalled = await cli.support().exists();
         return [
             ...(this.isMac
                 ? [
                       {
-                          label: `Chipmunk`,
+                          label: `Elrust`,
                           submenu: [
                               { role: 'services' },
                               { type: 'separator' },
@@ -54,65 +50,6 @@ export class Service extends Implementation {
                               {
                                   label: 'Settings',
                                   submenu: [
-                                      ...(cliSupported
-                                          ? [
-                                                {
-                                                    label: cliInstalled
-                                                        ? 'Remove CLI support'
-                                                        : 'Setup CLI support',
-                                                    click: () => {
-                                                        cli.support()
-                                                            .toggle()
-                                                            .then(() => {
-                                                                this.log().warn(
-                                                                    `CLI setup is done.`,
-                                                                );
-                                                                notifications.send(
-                                                                    cliInstalled
-                                                                        ? `Support of CLI was successfully removed`
-                                                                        : `CLI support was successfuly added`,
-                                                                    [
-                                                                        {
-                                                                            action: {
-                                                                                uuid: unique(),
-                                                                                name: 'Ok',
-                                                                                description: ``,
-                                                                            },
-                                                                            handler: () =>
-                                                                                Promise.resolve(),
-                                                                        },
-                                                                    ],
-                                                                );
-                                                            })
-                                                            .catch((err: Error) => {
-                                                                this.log().warn(
-                                                                    `Fail to setup CLI: ${err.message}`,
-                                                                );
-                                                                notifications.send(
-                                                                    cliInstalled
-                                                                        ? `Fail to remove CLI support: ${err.message}`
-                                                                        : `Fail to add CLI support: ${err.message}`,
-                                                                    [
-                                                                        {
-                                                                            action: {
-                                                                                uuid: unique(),
-                                                                                name: 'Ok',
-                                                                                description: ``,
-                                                                            },
-                                                                            handler: () =>
-                                                                                Promise.resolve(),
-                                                                        },
-                                                                    ],
-                                                                );
-                                                            })
-                                                            .finally(() => {
-                                                                this.update();
-                                                            });
-                                                    },
-                                                },
-                                                { type: 'separator' },
-                                            ]
-                                          : []),
                                       {
                                           label: 'Settings',
                                           click: async () => {
@@ -186,70 +123,11 @@ export class Service extends Implementation {
             ...(!this.isMac
                 ? [
                       {
-                          label: `Chipmunk`,
+                          label: `Elrust`,
                           submenu: [
                               {
                                   label: 'Settings',
                                   submenu: [
-                                      ...(cliSupported
-                                          ? [
-                                                {
-                                                    label: cliInstalled
-                                                        ? 'Remove CLI support'
-                                                        : 'Setup CLI support',
-                                                    click: () => {
-                                                        cli.support()
-                                                            .toggle()
-                                                            .then(() => {
-                                                                this.log().warn(
-                                                                    `CLI setup is done.`,
-                                                                );
-                                                                notifications.send(
-                                                                    cliInstalled
-                                                                        ? `Support of CLI was successfully removed`
-                                                                        : `CLI support was successfuly added`,
-                                                                    [
-                                                                        {
-                                                                            action: {
-                                                                                uuid: unique(),
-                                                                                name: 'Ok',
-                                                                                description: ``,
-                                                                            },
-                                                                            handler: () =>
-                                                                                Promise.resolve(),
-                                                                        },
-                                                                    ],
-                                                                );
-                                                            })
-                                                            .catch((err: Error) => {
-                                                                this.log().warn(
-                                                                    `Fail to setup CLI: ${err.message}`,
-                                                                );
-                                                                notifications.send(
-                                                                    cliInstalled
-                                                                        ? `Fail to remove CLI support: ${err.message}`
-                                                                        : `Fail to add CLI support: ${err.message}`,
-                                                                    [
-                                                                        {
-                                                                            action: {
-                                                                                uuid: unique(),
-                                                                                name: 'Ok',
-                                                                                description: ``,
-                                                                            },
-                                                                            handler: () =>
-                                                                                Promise.resolve(),
-                                                                        },
-                                                                    ],
-                                                                );
-                                                            })
-                                                            .finally(() => {
-                                                                this.update();
-                                                            });
-                                                    },
-                                                },
-                                                { type: 'separator' },
-                                            ]
-                                          : []),
                                       {
                                           label: 'Settings',
                                           click: async () => {
@@ -319,170 +197,6 @@ export class Service extends Implementation {
                       },
                   ]
                 : []),
-            {
-                label: 'File',
-                submenu: [
-                    {
-                        label: 'Open File(s)',
-                        click: async () => {
-                            Actions.openFile(undefined).catch((err: Error) => {
-                                this.log().error(`Fail call action OpenFile: ${err.message}`);
-                            });
-                        },
-                    },
-                    { type: 'separator' },
-                    {
-                        label: 'Concat',
-                        submenu: [
-                            {
-                                label: 'Files',
-                                click: async () => {
-                                    Actions.openFile(undefined).catch((err: Error) => {
-                                        this.log().error(
-                                            `Fail call action openFile: ${err.message}`,
-                                        );
-                                    });
-                                },
-                            },
-                            {
-                                label: 'Folder(s)',
-                                click: async () => {
-                                    Actions.openFolder(undefined).catch((err: Error) => {
-                                        this.log().error(
-                                            `Fail call action OpenFolder: ${err.message}`,
-                                        );
-                                    });
-                                },
-                            },
-                            { type: 'separator' },
-                            {
-                                label: 'Select Files from Folder',
-                                submenu: [
-                                    {
-                                        label: 'Binary (Dlt, SomeIp etc.)',
-                                        click: async () => {
-                                            Actions.openFolder(FileType.Binary).catch(
-                                                (err: Error) => {
-                                                    this.log().error(
-                                                        `Fail call action openFile: ${err.message}`,
-                                                    );
-                                                },
-                                            );
-                                        },
-                                    },
-                                    {
-                                        label: 'PcapNG',
-                                        click: async () => {
-                                            Actions.openFolder(FileType.PcapNG).catch(
-                                                (err: Error) => {
-                                                    this.log().error(
-                                                        `Fail call action openFile: ${err.message}`,
-                                                    );
-                                                },
-                                            );
-                                        },
-                                    },
-                                    {
-                                        label: 'Pcap',
-                                        click: async () => {
-                                            Actions.openFolder(FileType.PcapLegacy).catch(
-                                                (err: Error) => {
-                                                    this.log().error(
-                                                        `Fail call action openFile: ${err.message}`,
-                                                    );
-                                                },
-                                            );
-                                        },
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                ],
-            },
-            {
-                label: 'Connections',
-                submenu: [
-                    {
-                        label: 'DLT on UDP',
-                        click: async () => {
-                            Actions.stream(
-                                $.Parser.Protocol.Dlt,
-                                $.Origin.Stream.Stream.Source.UDP,
-                            ).catch((err: Error) => {
-                                this.log().error(`Fail call action Stream: ${err.message}`);
-                            });
-                        },
-                    },
-                    {
-                        label: 'DLT on TCP',
-                        click: async () => {
-                            Actions.stream(
-                                $.Parser.Protocol.Dlt,
-                                $.Origin.Stream.Stream.Source.TCP,
-                            ).catch((err: Error) => {
-                                this.log().error(`Fail call action Stream: ${err.message}`);
-                            });
-                        },
-                    },
-                    {
-                        label: 'DLT on Serial Port',
-                        click: async () => {
-                            Actions.stream(
-                                $.Parser.Protocol.Dlt,
-                                $.Origin.Stream.Stream.Source.Serial,
-                            ).catch((err: Error) => {
-                                this.log().error(`Fail call action Stream: ${err.message}`);
-                            });
-                        },
-                    },
-                    { type: 'separator' },
-                    {
-                        label: 'Plain text Serial Port',
-                        click: async () => {
-                            Actions.stream(
-                                $.Parser.Protocol.Text,
-                                $.Origin.Stream.Stream.Source.Serial,
-                            ).catch((err: Error) => {
-                                this.log().error(`Fail call action Stream: ${err.message}`);
-                            });
-                        },
-                    },
-                    { type: 'separator' },
-                    {
-                        label: 'Select Source for Plain text',
-                        click: async () => {
-                            Actions.stream($.Parser.Protocol.Text).catch((err: Error) => {
-                                this.log().error(`Fail call action Stream: ${err.message}`);
-                            });
-                        },
-                    },
-                    {
-                        label: 'Select Source for DLT',
-                        click: async () => {
-                            Actions.stream($.Parser.Protocol.Dlt).catch((err: Error) => {
-                                this.log().error(`Fail call action Stream: ${err.message}`);
-                            });
-                        },
-                    },
-                ],
-            },
-            {
-                label: 'Terminal',
-                submenu: [
-                    {
-                        label: 'Execute command',
-                        click: async () => {
-                            Actions.stream(
-                                $.Parser.Protocol.Text,
-                                $.Origin.Stream.Stream.Source.Process,
-                            ).catch((err: Error) => {
-                                this.log().error(`Fail call action Stream: ${err.message}`);
-                            });
-                        },
-                    },
-                ],
-            },
             {
                 label: 'Edit',
                 submenu: [

@@ -24,7 +24,7 @@ module Shell
   end
 
   def self.is_verbose_hidden
-    ENV['CHIPMUNK_BUILD_VERBOSE_HIDE'] == 'true' || ENV['CHIPMUNK_BUILD_VERBOSE_HIDE'] == 'on' || ENV['CHIPMUNK_BUILD_VERBOSE_HIDE'] == '1'
+    ENV['ELRUST_BUILD_VERBOSE_HIDE'] == 'true' || ENV['ELRUST_BUILD_VERBOSE_HIDE'] == 'on' || ENV['ELRUST_BUILD_VERBOSE_HIDE'] == '1'
   end
 
   def self.rm_rf(dir)

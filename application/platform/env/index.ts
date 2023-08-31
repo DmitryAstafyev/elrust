@@ -1,5 +1,4 @@
 export * as decorators from './decorators';
-export * as filters from './filters';
 export * as hash from './hash';
 export * as ipaddr from './ipaddr';
 export * as lock from './lock.token';

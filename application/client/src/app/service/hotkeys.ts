@@ -15,7 +15,6 @@ import { unique } from '@platform/env/sequence';
 import { components } from '@env/decorators/initial';
 import { Vertical, Horizontal } from '@ui/service/popup';
 import { env } from '@service/env';
-import { Action as FileAnyAction } from '@service/actions/file.any';
 import { Action as SettingsAction } from '@service/actions/settings';
 import { Action as ExitAction } from '@service/actions/exit';
 
@@ -127,13 +126,6 @@ export class Service extends Implementation {
                     closeOnKey: 'Escape',
                     width: 450,
                     uuid: 'Ctrl + P',
-                });
-            }),
-        );
-        this.register(
-            this.listen('Ctrl + O', () => {
-                new FileAnyAction().apply().catch((err: Error) => {
-                    this.log().error(`Fail to call action FileAnyAction; error: ${err.message}`);
                 });
             }),
         );

@@ -1,7 +1,6 @@
 import { Subject, Subscription } from '@platform/env/subscription';
 import { Events } from './events';
 import { Logger } from '@platform/log';
-import { Row } from '@schema/content/row';
 import { Base } from '../session/base';
 import { Session } from '../session/session';
 
@@ -61,9 +60,6 @@ export class Emitter {
         };
         layout: {
             resize: Handler<void>;
-        };
-        row: {
-            hover: Handler<Row | undefined>;
         };
         input: {
             focused: Handler<void>;
@@ -129,9 +125,6 @@ export class Emitter {
             },
             layout: {
                 resize: this._add<void>(this._events.ui.layout.resize),
-            },
-            row: {
-                hover: this._add<Row | undefined>(this._events.ui.row.hover),
             },
             input: {
                 focused: this._add<void>(this._events.ui.input.focused),

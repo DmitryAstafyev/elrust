@@ -11,7 +11,7 @@ export class Service extends Implementation {
 
     public override init(): Promise<void> {
         return new Promise((resolve) => {
-            if (envvars.get().CHIPMUNK_DEVELOPING_MODE) {
+            if (envvars.get().ELRUST_DEVELOPING_MODE) {
                 this._production = false;
             } else {
                 this._production = true;

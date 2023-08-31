@@ -1,2 +1,0 @@
-- [Creating](/charts/create.md)
-- [Charts in streams](/charts/dynamic.md)

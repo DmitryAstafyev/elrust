@@ -12,6 +12,4 @@ export { Tracker } from './api/tracker';
 
 export { Units, Events, Interfaces };
 
-export * as $ from 'platform/types/observe';
-
 setUuidGenerator(v4);

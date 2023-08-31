@@ -15,7 +15,7 @@ module Paths
     elsif OS.linux?
       'linux-unpacked'
     else
-      'mac/chipmunk.app/Contents/MacOS'
+      'mac/elrust.app/Contents/MacOS'
     end
   end
 
@@ -25,7 +25,7 @@ module Paths
     elsif OS.linux?
       'linux-unpacked/Resources'
     else
-      'mac/chipmunk.app/Contents/Resources'
+      'mac/elrust.app/Contents/Resources'
     end
   end
   TS_BINDINGS = 'application/apps/rustcore/ts-bindings'

@@ -11,8 +11,8 @@ module Screens
       { name: 'exit', value: 7 }
     ]
     puts '=' * 100
-    puts "\e[32mWelcome to Chipmunk builder\e[0m"
-    puts "\e[32mNo verbose mode: #{ENV['CHIPMUNK_BUILD_VERBOSE_HIDE']} (export CHIPMUNK_BUILD_VERBOSE_HIDE=true/false)\e[0m"
+    puts "\e[32mWelcome to Elrust builder\e[0m"
+    puts "\e[32mNo verbose mode: #{ENV['ELRUST_BUILD_VERBOSE_HIDE']} (export ELRUST_BUILD_VERBOSE_HIDE=true/false)\e[0m"
     puts '=' * 100
     puts ''
     case prompt.select('Actions groups', choices)

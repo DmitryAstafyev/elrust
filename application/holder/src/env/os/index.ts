@@ -98,7 +98,7 @@ export function getElectronAppShellEnvVars(
                     ELECTRON_RUN_AS_NODE: '1',
                     ELECTRON_NO_ATTACH_CONSOLE: '1',
                 };
-                const marker = '__chipmunk_marker__';
+                const marker = '__elrust_marker__';
                 const child = spawn(
                     targetShell,
                     [

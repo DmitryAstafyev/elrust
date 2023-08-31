@@ -2,8 +2,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
 
-const HOME = '.chipmunk';
-const LOG_FILE = 'chipmunk.log';
+const HOME = '.elrust';
+const LOG_FILE = 'elrust.log';
 
 /**
  * This logger is used only during loading application before initialization

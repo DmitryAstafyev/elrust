@@ -17,7 +17,7 @@ import { version } from '@module/version';
 import { error } from 'platform/log/utils';
 import { getExecutable } from '@env/os/platform';
 import { unique } from 'platform/env/sequence';
-import { ChipmunkGlobal } from '@register/global';
+import { ElrustGlobal } from '@register/global';
 import { exists } from '@env/fs';
 import { Update } from '@loader/exitcases/update';
 import { electron } from '@service/electron';
@@ -28,12 +28,12 @@ import * as fs from 'fs';
 import * as Events from 'platform/ipc/event';
 import * as Requests from 'platform/ipc/request';
 
-declare const global: ChipmunkGlobal;
+declare const global: ElrustGlobal;
 
 const UPDATER = 'updater';
 const AUTO = { key: 'autoUpdateCheck', path: 'general' };
 
-export const REPO = 'chipmunk';
+export const REPO = 'elrust';
 export const TARGET_TAG_STARTS = 'next-';
 
 enum LatestReleaseNotFound {

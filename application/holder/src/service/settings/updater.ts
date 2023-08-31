@@ -8,7 +8,7 @@ export const settings = {
         new Description({
             key: 'autoUpdateCheck',
             name: 'Auto update',
-            desc: 'Chipmunk checks updates automatically on start',
+            desc: 'Elrust checks updates automatically on start',
             path: 'general',
             type: Visibility.standard,
             allowEmpty: true,

@@ -47,11 +47,11 @@ export class LayoutWorkspace extends ChangesDetector implements AfterViewInit {
             .sidebar()
             ?.add({
                 content: {
-                    factory: components.get('app-elements-tree'),
+                    factory: components.get('app-views-sidebar-app'),
                 },
                 active: true,
                 closable: false,
-                name: 'Favourite',
+                name: 'Sidebar App',
             });
         this.env().subscriber.register(
             this.ilc().services.system.hotkeys.listen('Ctrl + Tab', () => {

@@ -1,4 +1,4 @@
-const KEY = '__CHIPMUNK_GLOBAL_SCOPE__';
+const KEY = '__ELRUST_GLOBAL_SCOPE__';
 
 declare const global: { [key: string]: any };
 declare const window: { [key: string]: any };

@@ -11,7 +11,7 @@ import { scope } from 'platform/env/scope';
 import { Logger } from 'platform/log';
 import { app, Event } from 'electron';
 import { LockToken } from 'platform/env/lock.token';
-import { IApplication, ChipmunkGlobal } from '@register/global';
+import { IApplication, ElrustGlobal } from '@register/global';
 import { unbind } from '@env/logs';
 import { setLogLevelFromEnvvars } from '@env/logs';
 import { envvars } from './envvars';
@@ -43,7 +43,7 @@ class Application implements IApplication {
                         before: modulesInitialization,
                     })
                     .then(() => {
-                        this.logger.debug(`Starting chipmunk@${version.getVersion()}...`);
+                        this.logger.debug(`Starting elrust@${version.getVersion()}...`);
                     })
                     .catch((err: Error) => {
                         this.logger.error(`Fail to run. Error: ${err.message}`);
@@ -187,6 +187,6 @@ class Application implements IApplication {
     }
 }
 
-declare const global: ChipmunkGlobal;
+declare const global: ElrustGlobal;
 
 global.application = new Application();

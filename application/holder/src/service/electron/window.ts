@@ -9,12 +9,12 @@ import { Transport } from 'platform/ipc/transport';
 import { Settings, Window as WindowSettings } from './window/settings';
 import { SettingsHolder, settingsFactory } from '@controller/settings';
 import { envvars } from '@loader/envvars';
-import { ChipmunkGlobal } from '@register/global';
+import { ElrustGlobal } from '@register/global';
 
 import * as path from 'path';
 import * as Events from 'platform/ipc/event';
 
-declare const global: ChipmunkGlobal;
+declare const global: ElrustGlobal;
 
 @Define({ name: 'Window', parent: services['electron'], accessor: system.getServicesAccessor() })
 export class Window extends Implementation {
@@ -26,7 +26,7 @@ export class Window extends Implementation {
         this._settings = settingsFactory(new Settings());
         await this._settings.read();
         this._window = new BrowserWindow({
-            title: `Chipmunk`,
+            title: `Elrust`,
             icon: (() => {
                 switch (process.platform) {
                     case 'linux':
@@ -79,7 +79,7 @@ export class Window extends Implementation {
             },
         );
         this._window.loadFile(path.resolve(paths.getClient(), 'index.html'));
-        envvars.get().CHIPMUNK_DEVELOPING_MODE && this._window.webContents.openDevTools();
+        envvars.get().ELRUST_DEVELOPING_MODE && this._window.webContents.openDevTools();
         return Promise.resolve();
     }
 

@@ -8,10 +8,10 @@ const store = new FileStore();
 
 export function setLogLevelFromEnvvars(): void {
     const level = (() => {
-        if (envvars.get().CHIPMUNK_DEVELOPING_MODE === true) {
+        if (envvars.get().ELRUST_DEVELOPING_MODE === true) {
             return Level.VERBOS;
         }
-        const devLevel = utils.getLogLevelFromStr(envvars.get().CHIPMUNK_DEV_LOGLEVEL);
+        const devLevel = utils.getLogLevelFromStr(envvars.get().ELRUST_DEV_LOGLEVEL);
         if (devLevel !== undefined) {
             return devLevel;
         }
@@ -21,7 +21,7 @@ export function setLogLevelFromEnvvars(): void {
 }
 
 export function setHomePath(home: string): Promise<void> {
-    return store.bind(path.resolve(home, `chipmunk.log`));
+    return store.bind(path.resolve(home, `elrust.log`));
 }
 
 export function unbind(): Promise<void> {

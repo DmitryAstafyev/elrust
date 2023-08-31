@@ -1,0 +1,15 @@
+[Desktop Entry]
+Name=Elrust
+Comment=Log viewer tool
+GenericName=Log viewer tool
+Exec=elrust %f
+Icon=elrust.png
+Type=Application
+Categories=Utility;Tools;
+Actions=new-empty-window;
+Keywords=elrust;
+
+[Desktop Action new-empty-window]
+Name=New Empty Window
+Exec=elrust %f
+Icon=elrust.png

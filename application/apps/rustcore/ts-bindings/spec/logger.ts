@@ -5,8 +5,8 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 
-const LOG_FILE = 'chipmunk.indexer.log';
-const HOME = '.chipmunk';
+const LOG_FILE = 'elrust.indexer.log';
+const HOME = '.elrust';
 const FORCED_REPORT_TIMEOUT = 2 * 60 * 1000;
 
 const BLOCKS_LOGS = ((): boolean => {
