@@ -169,6 +169,32 @@ impl RustSession {
     }
 
     #[node_bindgen]
+    async fn external_call_lib(
+        &self,
+        operation_id: String,
+        path: String,
+        a: i64,
+        b: i64,
+        lines: Vec<String>,
+    ) -> Result<(), ComputationErrorWrapper> {
+        if let Some(ref session) = self.session {
+            session
+                .external_call_lib(
+                    operations::uuid_from_str(&operation_id)?,
+                    path,
+                    a as u64,
+                    b as u64,
+                    lines,
+                )
+                .map_err(ComputationErrorWrapper)
+        } else {
+            Err(ComputationErrorWrapper(
+                ComputationError::SessionUnavailable,
+            ))
+        }
+    }
+
+    #[node_bindgen]
     async fn trigger_state_error(&self) -> Result<(), ComputationErrorWrapper> {
         if let Some(ref session) = self.session {
             session

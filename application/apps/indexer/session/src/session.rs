@@ -131,6 +131,22 @@ impl Session {
         Session::send_stop_signal(operation_id, &self.tx_operations, Some(&self.destroyed)).await
     }
 
+    pub fn external_call_lib(
+        &self,
+        operation_id: Uuid,
+        path: String,
+        a: u64,
+        b: u64,
+        lines: Vec<String>,
+    ) -> Result<(), ComputationError> {
+        self.tx_operations
+            .send(Operation::new(
+                operation_id,
+                operations::OperationKind::ExternalLibCall(path, a, b, lines),
+            ))
+            .map_err(|e| ComputationError::Communication(e.to_string()))
+    }
+
     /// Used for debug goals
     pub fn sleep(&self, operation_id: Uuid, ms: u64) -> Result<(), ComputationError> {
         self.tx_operations

@@ -5,7 +5,7 @@
 /// <reference path="../node_modules/@types/node/index.d.ts" />
 import { initLogger } from './logger';
 initLogger();
-import { Session, Factory } from '../src/api/session';
+import { Session } from '../src/api/session';
 import { finish, runner } from './common';
 import { readConfigurationFile } from './config';
 

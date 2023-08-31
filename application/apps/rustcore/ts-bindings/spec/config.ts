@@ -27,6 +27,9 @@ export interface IRegularTests {
 export interface IConfiguration {
     log_level: number;
     tests: {
+        external: {
+            regular: IRegularTests;
+        };
         jobs: {
             regular: IRegularTests;
         };

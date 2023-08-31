@@ -34,6 +34,14 @@ export abstract class RustSession extends RustSessionRequiered {
 
     public abstract getOperationsStat(): Promise<string>;
 
+    public abstract externalCallLib(
+        operationUuid: string,
+        path: string,
+        a: number,
+        b: number,
+        lines: string[],
+    ): Promise<void>;
+
     // Used only for testing and debug
     public abstract sleep(operationUuid: string, duration: number): Promise<void>;
 
@@ -59,6 +67,14 @@ export abstract class RustSessionNative {
     public abstract setDebug(debug: boolean): Promise<void>;
 
     public abstract getOperationsStat(): Promise<string>;
+
+    public abstract externalCallLib(
+        operationUuid: string,
+        path: string,
+        a: number,
+        b: number,
+        lines: string[],
+    ): Promise<void>;
 
     // Used only for testing and debug
     public abstract sleep(operationUuid: string, duration: number): Promise<void>;
@@ -182,6 +198,24 @@ export class RustSessionWrapper extends RustSession {
                             Source.GetOperationsStat,
                         ),
                     );
+                });
+        });
+    }
+
+    public externalCallLib(
+        operationUuid: string,
+        path: string,
+        a: number,
+        b: number,
+        lines: string[],
+    ): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this._provider.debug().emit.operation('externalCallLib', operationUuid);
+            this._native
+                .externalCallLib(operationUuid, path, a, b, lines)
+                .then(resolve)
+                .catch((err) => {
+                    reject(new NativeError(NativeError.from(err), Type.Other, Source.Sleep));
                 });
         });
     }

@@ -7,6 +7,7 @@ import { EventProvider, ISessionEvents, IError } from '../api/session.provider';
 import { IOrderStat } from '../provider/provider';
 import { Executors } from './executors/session.executors';
 import { ISleepResults } from './executors/session.sleep.executor';
+import { IExternalCallLibResults } from './executors/session.externalcalllib.executor';
 import { ICancelablePromise } from 'platform/env/promise';
 import { OperationStat } from '../interfaces/index';
 
@@ -121,6 +122,20 @@ export class Session {
 
     public getNativeSession(): RustSession {
         return this._session;
+    }
+
+    public externalCallLib(
+        path: string,
+        a: number,
+        b: number,
+        lines: string[],
+    ): ICancelablePromise<IExternalCallLibResults> {
+        return Executors.externalCallLib(this._session, this._provider, this._logger, {
+            path,
+            a,
+            b,
+            lines,
+        });
     }
 
     /**

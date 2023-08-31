@@ -72,6 +72,7 @@ impl Operation {
 #[allow(clippy::large_enum_variant)]
 pub enum OperationKind {
     Cancel { target: Uuid },
+    ExternalLibCall(String, u64, u64, Vec<String>),
     Sleep(u64),
     End,
 }
@@ -83,6 +84,7 @@ impl std::fmt::Display for OperationKind {
             "{}",
             match self {
                 OperationKind::Sleep(_) => "Sleeping",
+                OperationKind::ExternalLibCall(_, _, _, _) => "ExternalLibCall",
                 OperationKind::Cancel { .. } => "Canceling",
                 OperationKind::End => "End",
             }
@@ -228,6 +230,14 @@ impl OperationAPI {
                 OperationKind::Sleep(ms) => {
                     api.finish(handlers::sleep::handle(&api, ms).await, operation_str)
                         .await;
+                }
+                OperationKind::ExternalLibCall(path, a, b, lines) => {
+                    let slice: Vec<&str> = lines.iter().map(|s| &**s).collect();
+                    api.finish(
+                        handlers::external_call_lib::handle(&api, path, a, b, &slice).await,
+                        operation_str,
+                    )
+                    .await;
                 }
                 OperationKind::Cancel { target } => match tracker.cancel_operation(target).await {
                     Ok(canceled) => {
