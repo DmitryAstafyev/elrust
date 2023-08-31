@@ -276,7 +276,7 @@ namespace :test do
     end
   end
   desc 'run all test'
-  task all: ['test:binding:external', 'test:binding:cancel', 'test:binding:errors', 
+  task all: ['test:binding:cancel', 'test:binding:errors', 
              'test:binding:jobs', 'test:binding:promises', 'test:matcher:karma', 
              'test:utils:karma', 'test:utils:rust', 'test:matcher:rust']
 end
